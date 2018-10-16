@@ -42,7 +42,6 @@ MYCN.kd$FC <- NULL
 # venn diagram showing genes common and specific for NORAD and MYCN knock-down 
 fc_threshold = 0.5
 FDR_threshold = 0.05
-range_threshold = 100
 diff = merge(NORAD.kd, MYCN.kd, by = "external_gene_name") 
 diff <- diff[abs(log2FC) > fc_threshold & abs(logFC) > fc_threshold, ]
 par(mfrow = c(1,2))
