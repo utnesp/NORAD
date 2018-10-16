@@ -78,3 +78,26 @@ pheatmap(t, scale = "none", cluster_rows = F, cluster_cols = F, border_color = N
 dev.off()
 
 # combine and edit heatmap and venn diagrams in Inkscape
+
+sessionInfo()
+# R version 3.4.2 (2017-09-28)
+# Platform: x86_64-apple-darwin15.6.0 (64-bit)
+# Running under: macOS Sierra 10.12.3
+
+# Matrix products: default
+# BLAS: /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+# LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+
+# locale:
+# [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+# attached base packages:
+# [1] stats     graphics  grDevices utils     datasets  methods   base     
+
+# other attached packages:
+# [1] pheatmap_1.0.8      gplots_3.0.1        ggplot2_2.2.1       data.table_1.10.4-3
+
+# loaded via a namespace (and not attached):
+# [1] Rcpp_0.12.16       gtools_3.5.0       bitops_1.0-6       grid_3.4.2         plyr_1.8.4         gtable_0.2.0       scales_0.5.0       KernSmooth_2.23-15 pillar_1.2.1      
+# [10] rlang_0.2.0        curl_3.2           lazyeval_0.2.1     gdata_2.18.0       labeling_0.3       RColorBrewer_1.1-2 tools_3.4.2        munsell_0.4.3      yaml_2.1.18       
+# [19] compiler_3.4.2     colorspace_1.3-2   caTools_1.17.1     tibble_1.4.2      
