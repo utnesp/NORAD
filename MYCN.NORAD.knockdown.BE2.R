@@ -1,14 +1,10 @@
 library(data.table)
 library(ggplot2)
-library(gplots)
 library(ggrepel)
-library(pheatmap)
 library(enrichR) # https://cran.r-project.org/web/packages/enrichR/vignettes/enrichR.html
-library(stringr)
 library(edgeR)
 library(biomaRt)
 library(easybiomart)
-library(RColorBrewer)
 library(easyedgeR)
 library(gridExtra)
 
@@ -23,8 +19,6 @@ setwd(workingDir)
 NORAD.kd <- fread("https://raw.githubusercontent.com/utnesp/NORAD/master/NORAD.knockdown.CPM.BE2.txt")
 setkey(NORAD.kd, external_gene_name)
 
-
-#EGEOD84389.hg38 <- fread.sshfs("/home/put001/scripts2/181026_EGEOD84389_MYCN/results/all.gene.counts.txt", fill = T, servername = "put001@stallo.uit.no:", force = T, skip = 1, header = T)
 url="https://raw.githubusercontent.com/utnesp/NORAD/master/GSE84389.hg38.txt.gz"
 EGEOD84389.hg38 <- fread(paste(paste('URL=',url, sep = ""), ' ; curl "$URL" | gunzip -c', sep = ""))
 EGEOD84389.hg38 <- EGEOD84389.hg38[, c(1,7:ncol(EGEOD84389.hg38)), with = F]
@@ -63,6 +57,7 @@ MYCN.kd.hg38$ensembl_gene_id <- row.names(MYCN.kd.hg38)
 MYCN.kd.hg38 <- ensg2ext_name_biotype(MYCN.kd.hg38$ensembl_gene_id, combine = T)
 MYCN.kd.hg38 <- MYCN.kd.hg38[order(MYCN.kd.hg38$FDR), ]
 
+# genes common for NORAD and MYCN knock-down 
 t1 <- MYCN.kd.hg38[, c(1,4:9, 10:14)]
 colnames(t1)[8:12] <- paste(colnames(t1)[8:12], "MYCN", sep = "_")
 t2 <- NORAD.kd
@@ -70,7 +65,7 @@ colnames(t2)[7:11] <- paste(colnames(t2)[7:11], "NORAD", sep = "_")
 diff <- merge(t1, t2, by = "ensembl_gene_id")
 diff <- as.data.table(diff)
 diff <- diff[FDR_NORAD <= 0.05 | FDR_MYCN <= 0.05, ]
-
+# plot venn
 par(mfrow = c(1,2))
 input = list(
 NORAD.up = unlist(diff[logFC_NORAD > 0 & FDR_NORAD <= 0.05, "external_gene_name"], use.names = F), 
@@ -81,7 +76,7 @@ NORAD.down = unlist(diff[logFC_NORAD < 0 & FDR_NORAD <= 0.05, "external_gene_nam
 MYCN.down = unlist(diff[logFC_MYCN < 0 & FDR_MYCN <= 0.05, "external_gene_name"], use.names = F))
 venn(input)
 
-# process data from MYCN knock-down in SK-N-BE(2) (E-GEOD-84389) (correlate hg38 to hg19)
+# use processed data from MYCN knock-down in SK-N-BE(2) (E-GEOD-84389) and correlate hg38 to hg19
 EGEOD84389 <- fread("https://www.ebi.ac.uk/arrayexpress/files/E-GEOD-84389/E-GEOD-84389.processed.1.zip/GSM2232918_PR1_BE2_control.txt", col.names = c("external_gene_name", "GSM2232918_PR1_BE2_control"), key = "external_gene_name")
 temp <- fread("https://www.ebi.ac.uk/arrayexpress/files/E-GEOD-84389/E-GEOD-84389.processed.1.zip/GSM2232919_PR2_BE2_control.txt", col.names = c("external_gene_name", "GSM2232919_PR2_BE2_control"), key = "external_gene_name")
 EGEOD84389 <- merge(EGEOD84389, temp)
@@ -159,9 +154,9 @@ enriched$Term <- factor(enriched$Term, levels = rev(enriched$Term))
 enriched$Type <- factor(enriched$Type, levels = c("Biological Process", "ENCODE TF ChIP-seq", "Reactome", "Molecular Function"))
 p1 <- ggplot(enriched, aes(Term, Combined.Score)) + theme_bw() + geom_col(fill = "red") + coord_flip() + labs(x = "", y = "Combined Score") + facet_wrap(~Type, scales = "free")
 
-#postscript("GSEA.eps", width = 10, height = 5)
+#postscript("GSEA.eps", width = 10, height = 5) # uncomment to save as file
 p1
-#dev.off()
+#dev.off()  # uncomment to save as file
 
 # generate plot over NORAD showing genes that are MYCN regulated and RNA binding
 temp <- getBM(filters = "ensembl_gene_id", attributes = c("ensembl_gene_id", "source"), values = NORAD.kd$ensembl_gene_id, mart = mart)
@@ -184,8 +179,8 @@ NORAD.plot <- NORAD.plot[order(NORAD.plot$type), ]
 p3 <- ggplot(NORAD.plot, aes(logFC, -log10(FDR))) + geom_point(aes(color = type), size = 0.5) + theme_bw() + theme(panel.grid = element_blank(), legend.position = c(0.15,0.87), legend.title =  element_blank()) + scale_color_manual(values = c("#999999", "#E69F00")) + geom_text_repel(alpha = 0.7, label = NORAD.plot$name, segment.alpha = 0.3, size = 2, force = 0.2)
 p4 <- grid.arrange(p3, p2, ncol = 1)
 
-#svg("GSEA.volcano.svg", width = 12, height = 7)
+#svg("GSEA.volcano.svg", width = 12, height = 7) # uncomment to save as file
 grid.arrange(p1, p4, ncol = 2)
-#dev.off()
+#dev.off() # uncomment to save as file
 
 sessionInfo()
