@@ -42,7 +42,7 @@ Differential expression from NORAD knock-down was based on data in [NORAD.knockd
 Differential expression results was later compared to hg19 differential expression results obtained from the excel sheet "TEAD4-MYCN KD DGE signature" within [Table S7 RNA-seq derived signatures and pathway analysis from shTEAD4, shMYCN ans shWWTR1](http://cancerdiscovery.aacrjournals.org/highwire/filestream/43006/field_highwire_adjunct_files/6/169577_3_supp_4574645_p49g2y.xlsx) from the article [Cross-Cohort Analysis Identifies a TEAD4–MYCN Positive Feedback Loop as the Core Regulatory Element of High-Risk Neuroblastoma](http://cancerdiscovery.aacrjournals.org/content/8/5/582). Pearson's product-moment correlation comparing hg19 adjusted p-values to hg38 adjusted p-values resulted in r=0.96 (p<2.2e-16, 95% CI 0.959, 0.962).
 
 
-## ENCODE project and identificaiton of proteins binding to NORAD
+## ENCODE project and identication of proteins, transcription factors and histones binding to NORAD
 To identify proteins binding to the NORAD lncRNA, human RNA-binding data was downloaded as bed files from [ENCODE](https://www.encodeproject.org/search/?type=Experiment&assay_slims=RNA+binding&replicates.library.biosample.donor.organism.scientific_name=Homo+sapiens) with the command:
 
 ```bash
@@ -87,7 +87,7 @@ The resulting outfile contains a [ENCODE narrowPeak](https://genome.ucsc.edu/FAQ
     10. peak - Point-source called for this peak; 0-based offset from chromStart. Use -1 if no point-source called.
     
 
-This file containg peaks within the NORAD gene which then was filtered using the command:
+This file contains peaks within the NORAD gene which then was filtered using the command:
  ```bash
  awk '$1=="chr20" && $2>=36045622 && $3<=36050960 && $6=="-" && $8>=10 && $7>=2' $outfile >> NORAD.peaks.bed
  ```
