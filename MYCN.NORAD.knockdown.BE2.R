@@ -15,7 +15,7 @@ library(gridExtra)
 mart = useMart("ENSEMBL_MART_ENSEMBL", dataset='hsapiens_gene_ensembl')
 
 setEPS()
-workingDir = "/Volumes/Peter/LINC00657/GSEA.MYCN.RNA/"
+workingDir = "GSE84389/"
 dir.create(workingDir, recursive = T)
 setwd(workingDir)
 
