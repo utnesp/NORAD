@@ -108,5 +108,10 @@ The same pipeline was followed for NORAD hg19 coordinates (chrom=chr20, -start=3
 For ChIP-seq data, the same pipeline was also followed. However, a 500 bp upstream of NORAD transcriptional start site (TSS) was included as well as 2000 bp downstream of NORAD TSS.
 
 
+## Survival analysis of lncRNAs in SEQC dataset
+Survial analysis of lncRNAs follows the code supplied in [SEQC.survival.R](https://github.com/utnesp/NORAD/blob/master/SEQC.survival.R) and the function plot.surv() available in [plot.surv.R](https://github.com/utnesp/NORAD/blob/master/plot.surv.R).
+
 ## Artwork presentation
 [Inkscape](https://inkscape.org/) was used in the development of the artwork associated with the manuscript.
+
+
