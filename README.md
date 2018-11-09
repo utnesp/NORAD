@@ -107,9 +107,11 @@ The resulting bedGraph files was then manually inspected with the plotBedgraph f
 The same pipeline was followed for NORAD hg19 coordinates (chrom=chr20, -start=34633544 -end=34638882). 
 For ChIP-seq data, the same pipeline was also followed. However, a 500 bp upstream of NORAD transcriptional start site (TSS) was included as well as 2000 bp downstream of NORAD TSS.
 
-
 ## Survival analysis of lncRNAs in SEQC dataset
 Survial analysis of lncRNAs follows the code supplied in [SEQC.survival.R](https://github.com/utnesp/NORAD/blob/master/SEQC.survival.R) and the function plot.surv() available in [plot.surv.R](https://github.com/utnesp/NORAD/blob/master/plot.surv.R).
+
+## Profiling 3' UTR in SK-N-BE(2)c and HCT116 after NORAD knock-down
+Profiling of [effective length](https://salmon.readthedocs.io/en/latest/file_formats.html#quantification-file) within 3' UTRs was done using [Salmon](https://combine-lab.github.io/salmon/). Effective Length is is the computed effective length of the target transcript. It takes into account all factors being modeled that will effect the probability of sampling fragments from this transcript, including the fragment length distribution and sequence-specific and gc-fragment bias. Using salmon, an index was created using sequences of all transcripts as well as 5' and 3' UTRs from the fasta file generate from [getUTR.sequence.R](https://github.com/utnesp/NORAD/blob/master/getUTR.sequence.R). Raw fastq files from both SK-N-BE(2)c and HCT116 after NORAD knock-down was thereafter run using the script [salmon.sh](https://github.com/utnesp/NORAD/blob/master/salmon.sh). The effective length change was thereafter computed as the effective length in NORAD minus the effective length in control treated cell.
 
 ## Artwork presentation
 [Inkscape](https://inkscape.org/) was used in the development of the artwork associated with the manuscript.
