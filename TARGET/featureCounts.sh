@@ -8,9 +8,9 @@
 
 genfilework=/home/put001/data/GRCh38.p3/ENSEMBL/Homo_sapiens.GRCh38.dna.primary_assembly.reordered.fa
 gtffile=/home/put001/data/GRCh38.p3/ENSEMBL/Homo_sapiens.GRCh38.82.gtf
-bam_file_to_count=/global/work/put001/SRA/bam_files_to_count.txt
-featureCounts -T 16 -g gene_id -J -G $genfilework -p -s 1 -d 20 -a $gtffile -o all.gene.counts.txt $(eval 'cat $bam_file_to_count')
-featureCounts -T 16 -g exon_id -f -J -G $genfilework -p -s 1 -d 20 -a $gtffile -o all.exon.counts.txt $(eval 'cat $bam_file_to_count')
+
+featureCounts -T 16 -g gene_id -J -G $genfilework -p -s 1 -d 20 -a $gtffile -o all.gene.counts.txt $(eval 'awk 'BEGIN { OFS = ""} {print $1,".bam"}' SRA.txt | paste -sd " " -')
+featureCounts -T 16 -g exon_id -f -J -G $genfilework -p -s 1 -d 20 -a $gtffile -o all.exon.counts.txt $(eval 'awk 'BEGIN { OFS = ""} {print $1,".bam"}' SRA.txt | paste -sd " " -')
 
 printf "featureCounts was run on these files:\n"
 printf $(eval 'cat $bam_file_to_count') | sed s/\ /\n/g
