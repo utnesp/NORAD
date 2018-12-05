@@ -2,7 +2,7 @@
 
 #PBS -d /global/work/put001/SRA/sra
 #PBS -lnodes=1:ppn=1,pmem=32gb,walltime=24:00:00
-#PBS -t 1-171
+#PBS -t 1-161
 #PBS -e /global/work/put001/SRA/sra/log
 #PBS -o /global/work/put001/SRA/sra/log
 
