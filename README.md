@@ -46,6 +46,10 @@ Differential expression results was later compared to hg19 differential expressi
 To identify proteins binding to the NORAD lncRNA, human RNA-binding data was downloaded as bed files from [ENCODE]. 
 
 ```R
+library(doParallel)
+library(foreach)
+library(data.table)
+
 metadata <- fread("https://www.encodeproject.org/metadata/type=Experiment&status=released&assay_slims=RNA+binding&assay_title=eCLIP/metadata.tsv")
 metadata <- metadata[metadata$`File format` == "bed narrowPeak", ]
 
